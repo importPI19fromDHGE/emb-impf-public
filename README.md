@@ -11,7 +11,7 @@ Alles als Root-User durchführen.
 ## Ordnerstruktur
 
 Die Dateien wurden folgendermaßen angelegt:
-verify-ehc/ wurde [geklont](https://github.com/panzi/verify-ehc). Dabei wurde `verify-ehc.py` geringfügig manipuliert (siehe unten.)
+verify-ehc/ wurde [geklont](https://github.com/panzi/verify-ehc) (MIT-LICENSE). Dabei wurde `verify-ehc.py` geringfügig manipuliert (siehe unten.)
 ```
 path_to_folder/
 ├── verify-ehc/ #geklontes Repository
@@ -32,10 +32,7 @@ Im konkreten Fall gilt hier:
 ```sh
 path_to_folder/=home/pi/
 ```
-
-# Konfigschritte
-
-## notwendigerweise bekannte Git-Befehle
+## hilfreiche Git-Befehle
 
 ### Initial
 
@@ -75,6 +72,7 @@ git checkout -- file.extension
 git push --set-upstream origin branchname
 history > history.txt
 ```
+# Konfigschritte
 
 ## Aktualisierung und Tools holen
 
@@ -108,7 +106,7 @@ in
 `verify_ehc([...]]) -> bool:`
 
 Zu Beginn, timedelta wurde hinzugefügt, Zeile 1684 \
-Dadurch ist ein Impfzertifikat erst 14 Tage nach Erstellung gültig \
+Dadurch ist ein Zertifikat erst 14 Tage nach Erstellung gültig (Hintergedanke: Impfzertifikat) \
 !!**Vorsicht, möglicher Bug bei anderen Zertifikatstypen**!!
 ```python
 if cert.not_valid_before is not None and issued_at + timedelta(seconds=1209600) < cert.not_valid_before:
@@ -146,7 +144,7 @@ Am Ende der Datei, LED-Steuerung, Z 2450 ff.
                     led.off()
                     sleep(0.1)
 ```
-## anderes
+### Weitere Konfigurationsschritte
 ausführbar machen, z.B.
 ```sh
 cd path_to_folder/verify-ehc
@@ -159,7 +157,7 @@ cd path_to_folder/verify-ehc
 ./verify_ehc.py --certs-from AT,DE --save-certs trust_list.cbor
 ```
 
-## Dependencies nachinstallieren
+# Dependencies nachinstallieren
 
 ``` sh
 apt install libqt4-test python3-sip python3-pyqt5 libqtgui4 libjasper-dev libatlas-base-dev
@@ -170,12 +168,12 @@ und noch dazu:
 pip3 install opencv-contrib-python==4.1.0.25
 apt install libzbar0
 ```
-## Kamera einrichten
+# Kamera einrichten
 
 ``` sh
 raspi-config
 ```
-In GUI Kamera aktivieren --> Welche Änderung in File TODO
+Mit grafischen Menü Kamera aktivieren.
 
 ggf ist
 ``` sh
@@ -196,7 +194,7 @@ apt install --reinstall raspberrypi-kernel
 ```
 ausgeführt, das hat es soweit repariert.
 
-## Autostart
+# Autostart
 
 ``` sh
 cd /etc/init.d
