@@ -1,8 +1,5 @@
 Fortschritt Impfzertifikat, live vom PI 4 mit PI OS lite
 
-In manchen Dokumenten ist ein Personal Access Token zu lesen. Deshalb kann dieses Repository in dieser Form vorerst(!) nicht veröffentlicht werden.
-Eine öffentliche Version wird folgen!
-
 ## Ausrüstung
 
 RasPI 4, PI Camera v2, Ethernet, Monitor, Tastatur
