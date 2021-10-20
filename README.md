@@ -1,11 +1,27 @@
-Fortschritt Impfzertifikat, live vom PI 4 mit PI OS lite
+# Ausrüstung
 
-## Ausrüstung
-
-RasPI 4, PI Camera v2, Ethernet, Monitor, Tastatur
+Raspberry PI 4 B, PI Camera v2, Ethernet, Monitor, Tastatur
 Image: PI OS Lite via [Raspberry Pi Imager](https://www.raspberrypi.com/software/)
-Auf dem PI: Alles als Root-User durchführen
+Alles als Root-User durchführen.
 
+## Ordnerstruktur
+
+```
+path_to_folder/
+├── verify-ehc/
+│   ├── trustlist-cbor.schema.json
+│   ├── trustlist-json.schema.json
+│   ├── verify_ehc.py *verändert*
+│   └── trust_list.cbor *heruntergeladen via command*
+└── emb-impf/
+    └── barcodescanner.py
+```
+```
+etc/
+└── init.d/
+    └── impfe.sh
+
+```
 # Konfigschritte
 
 ## notwendigerweise bekannte Git-Befehle
