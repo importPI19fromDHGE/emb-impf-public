@@ -67,7 +67,10 @@ pip3 install opencv-python
 ## Änderungen an verify-ehc/
 
 ### Modifikationen verify_ehc.py
-zu beginn
+
+verify_ehc.py wurde verändert. Diese Änderungen stehen so in der vorhandenen Datei. Dies nur zur Nachvollziehbarkeit:
+
+Zu Beginn
 ```python
 from gpiozero import LED
 ```
