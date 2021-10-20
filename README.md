@@ -1,20 +1,23 @@
 # Über
 
-Mit diesem Projekt wird ein primitver Scanner von EU-Health-Certificates auf einem Raspberry PI realisiert.
+Mit diesem Projekt wird ein primitiver Scanner von EU-Health-Certificates auf einem Raspberry PI realisiert. Dieses Dokument erhebt (noch!) keinen Anspruch auf vollständige Dokumentation.
 
 ## Ausrüstung
 
-Raspberry PI 4 B, PI Camera v2, Ethernet, Monitor, Tastatur
-Image: PI OS Lite via [Raspberry Pi Imager](https://www.raspberrypi.com/software/)
+Raspberry PI 4 B, PI Camera v2, Ethernet, Monitor, Tastatur \
+Image: PI OS Lite via [Raspberry Pi Imager](https://www.raspberrypi.com/software/) \
 Alles als Root-User durchführen.
 
 ## Ordnerstruktur
 
 Die Dateien wurden folgendermaßen angelegt:
 verify-ehc/ wurde [geklont](https://github.com/panzi/verify-ehc) (MIT-LICENSE). Dabei wurde `verify-ehc.py` geringfügig manipuliert (siehe unten.)
+Denn, wichtig zu wissen: `verify_ehc.py only does the cryptographic verification and does not understand the payload`.
+
 ```
 path_to_folder/
 ├── verify-ehc/ #geklontes Repository
+│   ├── requirements.txt
 │   ├── trustlist-cbor.schema.json
 │   ├── trustlist-json.schema.json
 │   ├── verify_ehc.py #verändert
@@ -72,7 +75,7 @@ git checkout -- file.extension
 git push --set-upstream origin branchname
 history > history.txt
 ```
-# Konfigschritte
+# Konfigurationsschritte
 
 ## Aktualisierung und Tools holen
 
