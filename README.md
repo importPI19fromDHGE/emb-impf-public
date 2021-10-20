@@ -2,18 +2,24 @@
 
 Mit diesem Projekt wird ein primitiver Scanner von EU-Health-Certificates auf einem Raspberry PI realisiert. Dieses Dokument erhebt (noch!) keinen Anspruch auf vollständige Dokumentation.
 
-## Ausrüstung
+## Hardware
 
 Raspberry PI 4 B, PI Camera v2, Ethernet, Monitor, Tastatur \
 Image: PI OS Lite via [Raspberry Pi Imager](https://www.raspberrypi.com/software/) \
 Alles als Root-User durchführen.
 
+# Software
+
+Die Dateien wurden folgendermaßen angelegt:\
+verify-ehc/ wurde [geklont](https://github.com/panzi/verify-ehc) (MIT-LICENSE).
+
+Dabei wurde `verify-ehc.py` geringfügig manipuliert (siehe unten.)
+Denn, wichtig zu wissen:
+```
+verify_ehc.py only does the cryptographic verification and does not understand the payload
+```
+[Quelle](https://github.com/panzi/verify-ehc/issues/23#issuecomment-940405804)
 ## Ordnerstruktur
-
-Die Dateien wurden folgendermaßen angelegt:
-verify-ehc/ wurde [geklont](https://github.com/panzi/verify-ehc) (MIT-LICENSE). Dabei wurde `verify-ehc.py` geringfügig manipuliert (siehe unten.)
-Denn, wichtig zu wissen: `verify_ehc.py only does the cryptographic verification and does not understand the payload`.
-
 ```
 path_to_folder/
 ├── verify-ehc/ #geklontes Repository
@@ -34,46 +40,6 @@ etc/
 Im konkreten Fall gilt hier:
 ```sh
 path_to_folder/=home/pi/
-```
-## hilfreiche Git-Befehle
-
-### Initial
-
-``` sh
-- git init
-- git checkout branch
-- git clone
-- git pull
-```
-
-```
-git config --global user.name "Jonathan"
-git config --global user.email "26322754+nukerxy@users.noreply.github.com"
-git push
-```
-
-wenn schon ein commit mit falschen Daten vorhanden war:
-
-```
-git commit --amend --reset-author
-```
-### Aktuellen Stand speichern
-
-``` sh
-git checkout branch
-<Make some changes>
-git add .
-git commit -m "message"
-git push [-f]
-```
-### Sonstige (Zeilen einzeln lesen)
-
-```
-git status
-git reset
-git checkout -- file.extension
-git push --set-upstream origin branchname
-history > history.txt
 ```
 # Konfigurationsschritte
 
@@ -204,4 +170,45 @@ cd /etc/init.d
 nano impfe.sh
 chmod 777 impfe.sh
 sudo update-rc.d impfe.sh defaults
+```
+
+# hilfreiche Git-Befehle
+
+### Initial
+
+``` sh
+- git init
+- git checkout branch
+- git clone
+- git pull
+```
+
+```
+git config --global user.name "Jonathan"
+git config --global user.email "26322754+nukerxy@users.noreply.github.com"
+git push
+```
+
+wenn schon ein commit mit falschen Daten vorhanden war:
+
+```
+git commit --amend --reset-author
+```
+### Aktuellen Stand speichern
+
+``` sh
+git checkout branch
+<Make some changes>
+git add .
+git commit -m "message"
+git push [-f]
+```
+### Sonstige (Zeilen einzeln lesen)
+
+```
+git status
+git reset
+git checkout -- file.extension
+git push --set-upstream origin branchname
+history > history.txt
 ```
