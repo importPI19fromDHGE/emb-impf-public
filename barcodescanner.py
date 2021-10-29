@@ -5,19 +5,27 @@ import sys
 import time
 import os
 from gpiozero import LED
-tstart=time.time()
+#this is a clean version, without uncommented code
+#see barcodescanner_debug.py for debuggin ideas
+
+###initial###
 qrDecoder = cv2.QRCodeDetector()
+#use VideoDevice 0
 cap = cv2.VideoCapture(0)
 
-#on: program is running
-#off: qr_detected
-led_running_qr_detected = LED(17) # White, status
+# White LED on GPIO17, status running
+led_running_qr_detected = LED(17) # on: detected
 
-#blinking 5 times rapidly: fail, output==[]
-led_detection_success_fail = LED(27) #yellow
-print("init")
+# yellow LED on GPIO27, blinking 5 times rapidly: decoding failed, output==[]
+led_detection_success_fail = LED(27)
+
 count=0
+
+###Main###
+
+# while True loop is a quick and very dirty solution to keep process running
 while True:
+    #control LED blinking
     if count<10:
          led_running_qr_detected.off()
     elif 10<=count<20:
@@ -25,18 +33,20 @@ while True:
     else:
          count=0
     count=count+1
+    #slow down a tiny bit 
     time.sleep(0.05)
+    #make sure LED is off
     led_detection_success_fail.off()
+    #try to read image from VideoCapture (Camera)
     readsuccess, img = cap.read()
-#    print("read image")
     detectionsuccess=False
-    #tbeforedetect=time.time()
 
+    #Image was read, device exists
     if readsuccess:
         detectionsuccess,points = qrDecoder.detect(img)
-        tafterdetect=time.time()
+    #status info if camera not connected
     else:
-        print("read failed")
+        #Blinking LEDs
         for i in range(0,10):
               led_detection_success_fail.on()
               led_running_qr_detected.off()
@@ -44,40 +54,27 @@ while True:
               led_detection_success_fail.off()
               led_running_qr_detected.on()
               time.sleep(0.2)
+              
     if detectionsuccess:
         led_running_qr_detected.on()
-        print("detected")
-        print("time since start: \n",tafterdetect-tstart)
         cv2.imwrite("qr_gelesen.jpeg", img)
-        tafterwrite=time.time()
-       #print("start:",tbeforedetect-tstart,"detect:",tafterdetect-tbeforedetect,"write",tafterwrite-tafterdetect)
-       #time.sleep(1)
-       # manually run first: run ./verify_ehc.py --certs-from AT,DE --save-certs trust_list.cbor
-       # check if trust_list.cbor exists TODO
+
+        #run verify-ehc with saved image and offline trust_list.cbor
         commandstream=os.popen("cd /home/pi/verify-ehc/ && ./verify_ehc.py --image ../emb-impf/qr_gelesen.jpeg --certs-file trust_list.cbor")
-        output=commandstream.readlines() # readlines has \n or something
-        if output==[]: #yellow  LED starts blinking
+        # read output from commandstream object
+        output=commandstream.readlines() 
+
+        #if nothing was read 
+        if output==[]:
+              #yellow  LED starts blinking
               for i in range(0,4):
                   led_detection_success_fail.on()
                   time.sleep(0.1)
                   led_detection_success_fail.off()
                   time.sleep(0.1)
-              print("Error in barcodescanner.py: could not process qr code, try again!")
-             # cv2.imwrite("latest_qr_process_error_"+str(tafterdetect-tstart)+".jpeg",img)
-              cv2.imwrite("latest_qr_process_error.jpeg",img)
         else:
-             #led_detection_success_fail.on()
+            #wait a little more
               time.sleep(2)
-             # print("output",output)
-        print("completed")
-      # print(commandstream.readlines())
+        
+        #close commandline object - manual garbage collect
         commandstream.close()
-       # TODO clean up this output
-#      time.sleep(3)
-    #else:
-        #print("QR Code not detected")
-        #time.sleep(0.01)
-        #For debugging
-        #cv2.imwrite("qr_notfound.jpeg",img)
-#    cap.release()
-
